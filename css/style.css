@@ -13,15 +13,15 @@ ul {
    .header-box {
        grid-template-columns: 1fr; 
    }
-   .div-con-bg {
-    grid-template-columns: 1fr; 
+   .div-con-bg2{
+    grid-template-columns: 1fr;
    }
 }
 @media only screen and (min-width: 768px) {
    .header-box {
        grid-template-columns: 20% 1fr; 
    }
-     .div-con-bg {
+     .div-con-bg2{
     grid-template-columns: 1fr 1fr; 
    }
 }
@@ -29,7 +29,7 @@ ul {
    .header-box {
        grid-template-columns: 20% 1fr; 
    }
-     .div-con-bg {
+     .div-con-bg2{
     grid-template-columns: 1fr 1fr 1fr; 
    }
 }
@@ -70,13 +70,20 @@ ul {
     ;
 
     }
-.div-con-bg {
+.div-con-bg2{
     display: grid;   
     grid-template-rows: auto;
     gap: 5px;
-    align-items: center;
+    justify-items: center;
+    text-align: center;
     padding: 20px;
-    background-color: rgb(233, 132, 38);
+    font-family: 'Titillium Web';
+    font-size: 300%;
+    color: rgb(112, 230, 89);
+    text-shadow: rgb(26, 13, 125) 2px 2px 1px;
+    background-image: url("../content/img/Banquito.png") ;
+    background-size: 100%;
+    background-attachment: fixed;
 }
 .div-con-bg{
     padding: 10%;
