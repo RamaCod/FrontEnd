@@ -9,28 +9,33 @@
 ul {
     list-style: none;
 }
-/* Estilos para pantallas pequeñas */
 @media only screen and (max-width: 600px) {
    .header-box {
-       grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+       grid-template-columns: 1fr; 
+   }
+   .div-con-bg {
+    grid-template-columns: 1fr; 
    }
 }
-/* Estilos para pantallas medianas */
 @media only screen and (min-width: 768px) {
    .header-box {
-       grid-template-columns: 20% 1fr; /* Dos columnas en pantallas medianas */
+       grid-template-columns: 20% 1fr; 
+   }
+     .div-con-bg {
+    grid-template-columns: 1fr 1fr; 
    }
 }
-/* Estilos para pantallas grandes */
 @media only screen and (min-width: 1200px) {
    .header-box {
-       grid-template-columns: 20% 1fr; /* Tres columnas en pantallas grandes */
+       grid-template-columns: 20% 1fr; 
+   }
+     .div-con-bg {
+    grid-template-columns: 1fr 1fr 1fr; 
    }
 }
 .header-box {
-    display: grid;
-    /*grid-template-columns: 20% 1fr;  Una columna de 200px y otra que ocupa el espacio restante */
-    grid-template-rows: auto; /* Tres filas, la del medio es flexible */
+    display: grid;   
+    grid-template-rows: auto;
     gap: 5px;
     align-items: center;
     padding: 20px;
@@ -65,13 +70,15 @@ ul {
     ;
 
     }
-#img-ej2{
-        width: 300px;
-        height: 300px;
-        border: 5px solid blue;
-        border-radius: 100%;
-        }
-#div-con-bg{
+.div-con-bg {
+    display: grid;   
+    grid-template-rows: auto;
+    gap: 5px;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(233, 132, 38);
+}
+.div-con-bg{
     padding: 10%;
     text-align: center;
     font-family: 'Titillium Web';
@@ -79,6 +86,50 @@ ul {
     color: rgb(112, 230, 89);
     text-shadow: rgb(26, 13, 125) 2px 2px 1px;
     background-image: url("../content/img/Banquito.png") ;
-    background-size: cover;
+    background-size: 100%;
+    background-attachment: fixed;
     }
+#show1{
+        width: 85%;
+        height: 500px; 
+        border: 5px solid blue;
+        border-radius: 10%;
+        background-image: url("../content/img/Banquito.png");
+        }
+#show2{
+        width: 85%;
+        height: 500px; 
+        border: 5px solid blue;
+        border-radius: 10%;
+        background-image: url("../content/img/Banquito.png");
+        }
+#show3{
+        width: 85%;
+        height: 500px; 
+        border: 5px solid blue;
+        border-radius: 10%;
+        background-image: url("../content/img/Banquito.png");
+        }
+#show4{
+        width: 85%;
+        height: 500px; 
+        border: 5px solid blue;
+        border-radius: 10%;
+        background-image: url("../content/img/Banquito.png");
+        }
+#show5{
+        width: 85%;
+        height: 500px; 
+        border: 5px solid blue;
+        border-radius: 10%;
+        background-image: url("../content/img/Banquito.png");
+        }
+#show6{
+        width: 85%;
+        height: 500px; 
+        border: 5px solid blue;
+        border-radius: 10%;
+        background-image: url("../content/img/Banquito.png");
+        }
+
 
