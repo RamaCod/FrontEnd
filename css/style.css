@@ -1,34 +1,69 @@
 * {
     margin:0px ;
 }
-
-th {
-    border:1px solid rgb(245, 22, 178);
-    padding: 15px;
-    }
-p {
-    font-size: 20px;
-    }
-.p-rojo{
-    color: rgb(250, 61, 14);
-    }
-#parrafo-titulo{
-    font-weight: 900;
-    font-size: 60px;
-    }
+.titillium-web-bold {
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+ul {
+    list-style: none;
+}
+/* Estilos para pantallas pequeñas */
+@media only screen and (max-width: 600px) {
+   .header-box {
+       grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+   }
+}
+/* Estilos para pantallas medianas */
+@media only screen and (min-width: 768px) {
+   .header-box {
+       grid-template-columns: 20% 1fr; /* Dos columnas en pantallas medianas */
+   }
+}
+/* Estilos para pantallas grandes */
+@media only screen and (min-width: 1200px) {
+   .header-box {
+       grid-template-columns: 20% 1fr; /* Tres columnas en pantallas grandes */
+   }
+}
+.header-box {
+    display: grid;
+    /*grid-template-columns: 20% 1fr;  Una columna de 200px y otra que ocupa el espacio restante */
+    grid-template-rows: auto; /* Tres filas, la del medio es flexible */
+    gap: 5px;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(233, 132, 38);
+}
 #img-ej{
-    width:25%;
+    width:50%;
     border: 5px double rgb(0, 255, 34);
     border-radius: 50%;
     }
 #header{
+    flex: 1 1 50%;
+    text-align: center;
+    background-color: rgb(233, 132, 38);
+    }
+#header2{
+    flex: 1 1 50%;
+    flex-basis: content;
+    text-align: center;
+    font-family: 'Titillium Web';
+    font-size: 100%;
     background-color: rgb(233, 132, 38);
     }
 #nav{
+    font-family: 'Titillium Web';
     background-color: rgb(233, 132, 38);
     }
 #footer{
+    font-family: 'Titillium Web';
     background-color: rgb(233, 132, 38);
+    text-align: center;
+    ;
+
     }
 #img-ej2{
         width: 300px;
@@ -37,9 +72,13 @@ p {
         border-radius: 100%;
         }
 #div-con-bg{
-    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10%;
+    text-align: center;
+    font-family: 'Titillium Web';
+    font-size: 300%;
+    color: rgb(112, 230, 89);
+    text-shadow: rgb(26, 13, 125) 2px 2px 1px;
     background-image: url("../content/img/Banquito.png") ;
     background-size: cover;
-    opacity: 1;
     }
 
