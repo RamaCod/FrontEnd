@@ -1,61 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Banquito de Gelos</title>
-    <link href="../css/style.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Banquito de Gelos</title>
+  <link href="../css/style.css" rel="stylesheet" type="text/css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
-    <header>
-        <!-- Acá estamos dentro del header-->
-        <div class="header-box">
-            <div  id="header"> 
-                <img id=img-ej src="../content/img/Banquito2.png" alt="Logotipo de la empresa" >
-            </div>
-            <div id="header2">   
-                <h1>El Banquito de Gelos</h1>
-                <h2>Shows de Comedia</h2>
-            </div>
-        </div>
-    </header>
-    <nav>
-        <!-- Acá estamos dentro del nav-->
-        <div id="nav">
-            <ul>
-                <li><a href=../index.html>Inicio</a></li>
-                <li><a href=../pages/nosotros.html>Quiénes somos?</a></li>
-                <li><a href=../pages/shows.html>Shows</a></li>
-                <li><a href=../pages/reservas.html>Reservas</a></li>
-                <li><a href=../pages/contacto.html>Contacto</a></li>
-            </ul>
-        </div>
-    </nav>
-    <main>
-        <!-- Acá estamos dentro del main-->
-        <div  class="div-con-bg2">
-            <div id="show1">pedro
-            </div>
-            <div id="show2">luis
-            </div>
-            <div id="show3">jorge
-            </div>
-            <div id="show4">ana
-            </div>
-            <div id="show5">lucas
-            </div>
-            <div id="show6">ruben
-            </div>
-        </div>
-    </main>
-    <footer>
-        <!-- Acá estamos dentro del footer-->
-        <div id="footer">
-            <p><strong>CONTACTO</strong></p>
-            <p><Strong>11-4455-6677</Strong></p>
-            <a href="mailto:elbanquitodegelos@gmail.com">Enviar correo</a>
-        </div>
-    </footer>
+  <header>
+    <div class="header-box">
+      <div id="header">
+        <img
+          id="img-ej"
+          src="../content/img/Banquito2.png"
+          alt="Logotipo de la empresa"
+        />
+      </div>
+      <div id="header2">
+        <h1>El Banquito de Gelos</h1>
+        <h2>Shows de Comedia</h2>
+      </div>
+    </div>
+  </header>
+  <nav>
+  <button class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div id="nav">
+    <ul id="navMenu">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../pages/nosotros.html">Quiénes somos?</a></li>
+      <li><a href="../pages/shows.html">Shows</a></li>
+      <li><a href="../pages/reservas.html">Reservas</a></li>
+      <li><a href="../pages/contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+  <main style="position: relative;">
+    <div id="icono-reservas">
+      <i class="fas fa-shopping-cart" id="carrito-icono"></i>
+      <span id="contador" class="contador-num" style="display: none;">0</span>
+      <span id="notificacion" class="notificacion"></span>
+
+      <!-- POPUP RESERVAS -->
+      <div id="popup-reservas" class="popup-reservas" style="display:none;">
+        <h4>Shows Reservados</h4>
+        <ul id="lista-reservas"></ul>
+        <button id="btn-borrar-todo" style="margin-top:10px;">Borrar todas</button>
+      </div>
+    </div>
+
+    <div id="show-container" class="div-con-bg2"></div>
+  </main>
+
+  <footer>
+    <div id="footer">
+      <p><strong>CONTACTO</strong></p>
+      <p><strong>11-4455-6677</strong></p>
+      <a href="mailto:elbanquitodegelos@gmail.com">Enviar correo</a>
+    </div>
+  </footer>
+
+  <script>
+    const shows = [
+      { id: 1, nombre: "Ariadna", imagen:"../content/img/ariadna.jpg" },
+      { id: 2, nombre: "Juan", imagen:"../content/img/juan.jpg"  },
+      { id: 3, nombre: "Micaela", imagen:"../content/img/micaela.jpg"  },
+      { id: 4, nombre: "Ana", imagen:"../content/img/ana.jpg"  },
+      { id: 5, nombre: "Maria", imagen:"../content/img/maria.jpg"  },
+      { id: 6, nombre: "Anto", imagen:"../content/img/antonella.jpg"  },
+    ];
+
+    // Cargar desde localStorage
+    const reservasGuardadas = JSON.parse(localStorage.getItem("showsReservados")) || [];
+    const reservados = new Set(reservasGuardadas);
+
+    const contenedor = document.getElementById("show-container");
+    const contador = document.getElementById("contador");
+    const notificacion = document.getElementById("notificacion");
+    const popup = document.getElementById("popup-reservas");
+    const listaReservas = document.getElementById("lista-reservas");
+    const btnBorrarTodo = document.getElementById("btn-borrar-todo");
+
+    // Función para guardar reservas en localStorage
+    function guardarReservas() {
+      const ids = Array.from(reservados);
+      localStorage.setItem("showsReservados", JSON.stringify(ids));
+    }
+
+    // Actualiza contador y punto rojo
+    function actualizarContador() {
+      if (reservados.size > 0) {
+        notificacion.style.display = "block";
+      } else {
+        notificacion.style.display = "none";
+        popup.style.display = "none"; // Oculta popup si no hay reservas
+      }
+    }
+
+    // Actualiza la lista en el popup
+    function actualizarListaReservas() {
+      listaReservas.innerHTML = "";
+
+      if (reservados.size === 0) {
+        listaReservas.innerHTML = "<li>No hay reservas.</li>";
+        btnBorrarTodo.style.display = "none";
+        return;
+      }
+
+      btnBorrarTodo.style.display = "block";
+
+      reservados.forEach((id) => {
+        const show = shows.find((s) => s.id === id);
+        if (show) {
+          const li = document.createElement("li");
+          li.textContent = show.nombre;
+
+          // Botón borrar individual
+          const btnBorrar = document.createElement("button");
+          btnBorrar.textContent = "✖";
+          btnBorrar.style.marginLeft = "10px";
+          btnBorrar.style.background = "none";
+          btnBorrar.style.border = "none";
+          btnBorrar.style.color = "red";
+          btnBorrar.style.cursor = "pointer";
+          btnBorrar.title = "Eliminar reserva";
+
+          btnBorrar.addEventListener("click", () => {
+            reservados.delete(id);
+            guardarReservas();
+            actualizarBotones();
+            actualizarContador();
+            actualizarListaReservas();
+          });
+
+          li.appendChild(btnBorrar);
+          listaReservas.appendChild(li);
+        }
+      });
+    }
+
+    // Actualiza el estado de los botones
+    function actualizarBotones() {
+      shows.forEach((show) => {
+        const boton = document.getElementById(`btn-${show.id}`);
+        if (!boton) return;
+
+        if (reservados.has(show.id)) {
+          boton.textContent = "Reservado";
+          boton.classList.add("reservado");
+          boton.disabled = true;
+        } else {
+          boton.textContent = "Reservar";
+          boton.classList.remove("reservado");
+          boton.disabled = false;
+        }
+      });
+    }
+
+    // Crear los shows y botones
+    shows.forEach((show) => {
+      const div = document.createElement("div");
+      div.className = "show";
+      div.innerHTML = `
+  <img src="${show.imagen}" alt="${show.nombre}" class="show-imagen">
+  <h3>${show.nombre}</h3>
+  <button id="btn-${show.id}">Reservar</button>
+  <div id="mensaje-${show.id}" class="mensaje" style="display: none;"></div>
+      `;
+      contenedor.appendChild(div);
+
+      const boton = document.getElementById(`btn-${show.id}`);
+      const mensaje = document.getElementById(`mensaje-${show.id}`);
+
+      boton.addEventListener("mouseover", () => {
+        if (reservados.has(show.id)) {
+          mensaje.textContent = "Ese show ya fue reservado";
+          mensaje.style.color = "red";
+        } else {
+          mensaje.textContent = "Haz clic para reservar";
+          mensaje.style.color = "red";
+        }
+        mensaje.style.display = "block";
+      });
+
+      boton.addEventListener("mouseout", () => {
+        mensaje.style.display = "none";
+      });
+
+      boton.addEventListener("click", () => {
+        if (!reservados.has(show.id)) {
+          reservados.add(show.id);
+          guardarReservas();
+          actualizarBotones();
+          actualizarContador();
+          actualizarListaReservas();
+        }
+      });
+    });
+
+    // Mostrar/ocultar popup al hacer clic en icono carrito
+    const iconoReservas = document.getElementById("icono-reservas");
+    const carrito = document.getElementById("carrito-icono");
+    const contadorTexto = document.getElementById("contador");
+
+    iconoReservas.addEventListener("click", (e) => {
+      e.stopPropagation(); // Para que no se cierre al clicar sobre sí mismo
+      if (popup.style.display === "block") {
+        popup.style.display = "none";
+      } else if (reservados.size > 0) {
+        actualizarListaReservas();
+        popup.style.display = "block";
+      }
+    });
+
+    // Cerrar popup si clic afuera
+    document.addEventListener("click", () => {
+      popup.style.display = "none";
+    });
+
+    popup.addEventListener("click", (e) => {
+      e.stopPropagation(); // No cerrar si clic dentro del popup
+    });
+
+    // Hover icono carrito: mostrar cantidad
+    iconoReservas.addEventListener("mouseover", () => {
+      if (reservados.size > 0) {
+        carrito.style.display = "none";
+        contadorTexto.style.display = "block";
+        contadorTexto.textContent = reservados.size;
+      }
+    });
+
+    iconoReservas.addEventListener("mouseout", () => {
+      carrito.style.display = "block";
+      contadorTexto.style.display = "none";
+    });
+
+    // Borrar todas reservas
+    btnBorrarTodo.addEventListener("click", () => {
+      reservados.clear();
+      guardarReservas();
+      actualizarBotones();
+      actualizarContador();
+      actualizarListaReservas();
+      popup.style.display = "none";
+    });
+
+    // Scroll para fijar icono
+    const nav = document.getElementById("nav");
+
+    window.addEventListener("scroll", () => {
+      const navBottom = nav.getBoundingClientRect().bottom;
+
+      if (navBottom <= 0) {
+        iconoReservas.classList.add("fijo");
+      } else {
+        iconoReservas.classList.remove("fijo");
+      }
+    });
+
+    // Inicializar estado al cargar la página
+    actualizarBotones();
+    actualizarContador();
+    // Menu hamburguesa
+// Botón menú hamburguesa
+const toggle = document.getElementById('menuToggle');
+const menu = document.getElementById('navMenu');
+
+toggle.addEventListener('click', () => {
+  menu.classList.toggle('activo');
+});
+
+// En pantallas chicas: cerrar menú al hacer scroll
+window.addEventListener('scroll', () => {
+  if (window.innerWidth <= 767) {
+    menu.classList.remove('activo');
+  }
+});
+  </script>
+  <script>
+  const navMenu = document.querySelector("#nav ul");
+  const header = document.querySelector("header");
+
+  // Variable CSS para altura del header
+  function actualizarAlturaHeader() {
+    const alturaHeader = header.getBoundingClientRect().height;
+    navMenu.style.setProperty('--header-height', alturaHeader + "px");
+  }
+
+  // Ejecutar al cargar y al redimensionar ventana
+  window.addEventListener("load", actualizarAlturaHeader);
+  window.addEventListener("resize", actualizarAlturaHeader);
+</script>
 </body>
 </html>

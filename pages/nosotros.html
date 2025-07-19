@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Banquito de Gelos</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -21,17 +22,19 @@
         </div>
     </header>
     <nav>
-        <!-- Acá estamos dentro del nav-->
-        <div id="nav">
-            <ul>
-                <li><a href=../index.html>Inicio</a></li>
-                <li><a href=../pages/nosotros.html>Quiénes somos?</a></li>
-                <li><a href=../pages/shows.html>Shows</a></li>
-                <li><a href=../pages/reservas.html>Reservas</a></li>
-                <li><a href=../pages/contacto.html>Contacto</a></li>
-            </ul>
-        </div>
-    </nav>
+  <button class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div id="nav">
+    <ul id="navMenu">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../pages/nosotros.html">Quiénes somos?</a></li>
+      <li><a href="../pages/shows.html">Shows</a></li>
+      <li><a href="../pages/reservas.html">Reservas</a></li>
+      <li><a href="../pages/contacto.html">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
     <main>
         <!-- Acá estamos dentro del main-->
         <div  class="div-con-bg">
@@ -53,5 +56,36 @@
             <a href="mailto:elbanquitodegelos@gmail.com">Enviar correo</a>
         </div>
     </footer>
+    <script>
+        // Menu hamburguesa
+        // Botón menú hamburguesa
+        const toggle = document.getElementById('menuToggle');
+        const menu = document.getElementById('navMenu');
+
+        toggle.addEventListener('click', () => {
+        menu.classList.toggle('activo');
+        });
+
+        // En pantallas chicas: cerrar menú al hacer scroll
+        window.addEventListener('scroll', () => {
+        if (window.innerWidth <= 767) {
+            menu.classList.remove('activo');
+        }
+        });
+        </script>
+        <script>
+        const navMenu = document.querySelector("#nav ul");
+        const header = document.querySelector("header");
+
+        // Variable CSS para altura del header
+        function actualizarAlturaHeader() {
+            const alturaHeader = header.getBoundingClientRect().height;
+            navMenu.style.setProperty('--header-height', alturaHeader + "px");
+        }
+
+        // Ejecutar al cargar y al redimensionar ventana
+        window.addEventListener("load", actualizarAlturaHeader);
+        window.addEventListener("resize", actualizarAlturaHeader);
+    </script>
 </body>
 </html>
